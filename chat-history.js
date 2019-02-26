@@ -17,6 +17,16 @@ const getChat = async () => {
 }
 
 const chatHistory = async (chat) => {
+
+  let test = await telegram('messages.sendMessage', {
+    peer: {
+      _: 'inputPeerSelf',
+    },
+    message: 'تست jsj',
+    random_id: 123,
+  })
+  console.log(test)
+
   let lastIdofMsgs = await db.getLastMsgId();
 
   const max = config.telegram.msgHistory.maxMsg

@@ -18,6 +18,8 @@
     "node-fetch": "^2.2.0",
     "prompt": "^1.0.0",
     "ramda": "^0.25.0",
+    "googleapis": "^37.2.0",
+    "massive": "^5.7.5",
     "telegram-mtproto": "^2.2.2"
   }
 }

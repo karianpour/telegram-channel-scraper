@@ -7,31 +7,40 @@ const start = async () => {
     await checkLogin();
     await database.connect();
 
-    const dialogs = await runWithTimeout(telegram, 'messages.getDialogs', {
-      limit: 50,
-    }, undefined, 5000);
-
-    console.log(dialogs);
-
-    const chatsToBeScrapped = filterChats(dialogs.chats);
-
-    for(let i=0; i<chatsToBeScrapped.length; i++){
+    do{
       try{
-        const chat = chatsToBeScrapped[i];
-        console.log(`${i+1} - scrapping ${chat.id}`);
-        await readChats(chat);
+        const dialogs = await runWithTimeout(telegram, 'messages.getDialogs', {
+          limit: 50,
+        }, undefined, 5000);
+
+        console.log(dialogs);
+
+        const chatsToBeScrapped = filterChats(dialogs.chats);
+
+        for(let i=0; i<chatsToBeScrapped.length; i++){
+          try{
+            const chat = chatsToBeScrapped[i];
+            console.log(`${i+1} - scrapping ${chat.id}`);
+            await readChats(chat);
+          }catch(err){
+            console.error(err);
+            if(err.message==='timed out'){
+              i--; //let's retry
+            }
+          }
+        }
+        break;
       }catch(err){
         console.error(err);
-        if(err.message==='timed out'){
-          i--; //let's retry
+        if(err.message!=='timed out'){
+          break;
         }
       }
-    }
+    }while(true);
   }catch(err){
     console.error(err);
   }
-
-
+  process.exit(0);
 }
 
 const mellatChannelRegEx = /[ab].+[-.].*/;

@@ -3,3 +3,5 @@ node_modules
 storage/*
 !storage/.gitkeep
 .vscode
+.env.k1
+/private*

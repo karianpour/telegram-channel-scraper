@@ -13,7 +13,7 @@ const start = async () => {
           limit: 50,
         }, undefined, 5000);
 
-        console.log(dialogs);
+        // console.log(dialogs);
 
         const chatsToBeScrapped = filterChats(dialogs.chats);
 
@@ -25,6 +25,7 @@ const start = async () => {
           }catch(err){
             console.error(err);
             if(err.message==='timed out'){
+              console.log('it was timeout, lets try again.')
               i--; //let's retry
             }
           }
@@ -33,6 +34,7 @@ const start = async () => {
       }catch(err){
         console.error(err);
         if(err.message!=='timed out'){
+          console.log('it was timeout, lets try again.')
           break;
         }
       }

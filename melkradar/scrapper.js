@@ -44,6 +44,7 @@ const start = async () => {
           const dialogToBeScrapped = filterDialog(dialogs);
   
           await readDialogs(dialogToBeScrapped, telegram.client, phone);
+          break;
   
         }catch(err){
           console.error(err);

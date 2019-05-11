@@ -59,7 +59,7 @@ const database = {
       `
       select id,
         'ملکرادار' as source,
-        phone,
+        right(phone, 3) as phone,
         '' as type,
         '' as hood,
         title,

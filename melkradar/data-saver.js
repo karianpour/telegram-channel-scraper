@@ -53,6 +53,30 @@ const database = {
     );
     return result.length === 0 ? null : result[0].max_scrapping_message_id;
   },
+
+  readList: async (lastDate) => {
+    const result = await this.db.query(
+      `
+      select id,
+        'ملکرادار' as source,
+        phone,
+        '' as type,
+        '' as hood,
+        title,
+        data,
+        created_at
+      from melkradar
+      where 
+        created_at > $1
+
+      order by created_at desc
+      `,
+      [
+        lastDate,
+      ]
+    );
+    return result;
+  },
 }
 
 module.exports = {

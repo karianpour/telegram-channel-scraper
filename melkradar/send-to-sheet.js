@@ -6,7 +6,7 @@ const { database } = require('./data-saver');
 const {google} = require('googleapis');
 const privatekey = require('../private-key-scrapers.json');
 const sheets = google.sheets('v4');
-const spreadsheetId = '1lNq4qT3WjdHTpOX8TqgsIrssdee8VD17UCaDWFZqF74';
+const spreadsheetId = '1LI_p2bqGW8wp5JTfQYX22Z-QQ508VBDZX1xqRLTBaqY';
 
 const jwtClient = new google.auth.JWT(
   privatekey.client_email,
@@ -45,7 +45,7 @@ async function main(){
       return;
     }
 
-    const headers = [ 'source', 'type', 'hood', 'title', 'data', 'created_at' ];
+    const headers = [ 'source', 'phone', 'type', 'hood', 'title', 'data', 'created_at' ];
 
     const data = list.map( l => headers.map( h => l[h]));
     data.unshift(headers);

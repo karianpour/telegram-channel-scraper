@@ -1,15 +1,21 @@
-const {checkLogin} = require('../utils/node-storage');
-const telegram = require('../utils/init');
+require('dotenv').config();
+const config = require('../config');
+const Telegram = require('../utils/telegram');
+
 const { database } = require('./data-saver');
 
 const start = async () => {
   try{
-    await checkLogin();
+    config.setConfig('+989018960889', 'mellat');
+
+    const telegram = new Telegram();
+
+    await telegram.checkLogin();
     await database.connect();
 
     do{
       try{
-        const dialogs = await runWithTimeout(telegram, 'messages.getDialogs', {
+        const dialogs = await runWithTimeout(telegram.client, 'messages.getDialogs', {
           limit: 50,
         }, undefined, 5000);
 
@@ -21,7 +27,7 @@ const start = async () => {
           try{
             const chat = chatsToBeScrapped[i];
             console.log(`${i+1} - scrapping ${chat.id}`);
-            await readChats(chat);
+            await readChats(chat, telegram.client);
           }catch(err){
             console.error(err);
             if(err.message==='timed out'){
@@ -34,9 +40,9 @@ const start = async () => {
       }catch(err){
         console.error(err);
         if(err.message!=='timed out'){
-          console.log('it was timeout, lets try again.')
           break;
         }
+        console.log('it was timeout, lets try again.')
       }
     }while(true);
   }catch(err){
@@ -52,7 +58,7 @@ const filterChats = (chats) => {
   });
 }
 
-const readChats = async (chat) =>{
+const readChats = async (chat, telegram) =>{
   const maxScrappingMessageId = await database.maxScrappingMessageId(chat.id);
 
   const firstDate = (new Date('2019-02-22 22:33:51.482197+03:30')).getTime() / 1000;

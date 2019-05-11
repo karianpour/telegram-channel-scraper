@@ -41,15 +41,9 @@ const start = async () => {
             limit: 50,
           }, undefined, 15000);
   
-          // console.log(dialogs);
-  
           const dialogToBeScrapped = filterDialog(dialogs);
   
-          try{
-            await readDialogs(dialogToBeScrapped, telegram.client, phone);
-          }catch(err){
-            console.error(err);
-          }
+          await readDialogs(dialogToBeScrapped, telegram.client, phone);
   
         }catch(err){
           console.error(err);

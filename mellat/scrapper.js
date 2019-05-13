@@ -68,6 +68,7 @@ const readChats = async (chat, telegram) =>{
   let count = 0;
 
   do {
+    await sleep(300);
     let history = await runWithTimeout(telegram, 'messages.getHistory', {
       peer: {
         _: 'inputPeerChannel',
@@ -116,6 +117,10 @@ async function runWithTimeout(telegram, method, params, options, timeout){
         reject(new Error('timed out'));
     }, timeout);
   });
+}
+
+async function sleep(m){
+  return new Promise((resolve)=>{ setTimeout(resolve, m) });
 }
 
 start();

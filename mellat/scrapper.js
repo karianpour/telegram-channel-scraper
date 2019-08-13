@@ -51,12 +51,15 @@ const start = async () => {
   process.exit(0);
 }
 
-const mellatChannelRegEx = /[ab].+[-.].*/;
+// const mellatChannelRegEx = /[ab].+[-.].*/;
+const mellatChannelRegEx = /.*[ab][0-9][0-9].*/;
 const filterChats = (chats) => {
   return chats.filter(chat => {
     return mellatChannelRegEx.test(chat.title)
   });
 }
+
+
 
 const readChats = async (chat, telegram) =>{
   const maxScrappingMessageId = await database.maxScrappingMessageId(chat.id);

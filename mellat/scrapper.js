@@ -68,7 +68,7 @@ const readChats = async (chat, telegram) =>{
   let count = 0;
 
   do {
-    await sleep(300);
+    await sleep(1000);
     let history = await runWithTimeout(telegram, 'messages.getHistory', {
       peer: {
         _: 'inputPeerChannel',
@@ -77,7 +77,7 @@ const readChats = async (chat, telegram) =>{
       },
       offset_id: offsetId,
       limit
-    }, undefined, 5000);
+    }, undefined, 7000);
     let alreadySaved = 0;
 
     if (history.messages.length > 0) {

@@ -16,7 +16,7 @@ const start = async () => {
     do{
       try{
         const dialogs = await runWithTimeout(telegram.client, 'messages.getDialogs', {
-          limit: 50,
+          limit: 80,
         }, undefined, 5000);
 
         // console.log(dialogs);

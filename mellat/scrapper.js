@@ -120,6 +120,7 @@ async function runWithTimeout(telegram, method, params, options, timeout){
 }
 
 async function sleep(m){
+  console.log(`waiting ${m}`);
   return new Promise((resolve)=>{ setTimeout(resolve, m) });
 }
 
